@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="RobotNavigator" default="compile" basedir=".">
+	<description>Ant Script for project</description>
+  <property name="src" location="src"/>   
+  <property name="bin" location="bin"/>
+  <property name="dist"  location="dist"/> 
+  <property name="doc"  location="doc"/>   
+  <property name="lib"  location="lib"/>  
+	
+	
+	<!--
+	pour que le script fonctionne en ligne de commandes :
+		- mettre les variables ANT_HOME et JAVA_HOME dans le PATH
+	pour que le script fonctionne sur eclipse :
+		- le JRE System Library doit etre une version jdk6, 
+		eclipse doit pour cela trouver sur votre machine une installation coherente du JDK/JRE
+	-->
+
+	<!-- Cette cible sert a utiliser les conditions if then else -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+	  <classpath>
+	    <pathelement location="lib/ant-contrib-1.0b2.jar"/>
+	  </classpath>
+	</taskdef>
+
+	<!-- Initialisation de l'environnement du projet -->
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${bin}"/>
+    <mkdir dir="${doc}"/>
+    <mkdir dir="${lib}"/>
+  </target>
+
+	<!-- cible de compilation des sources -->
+  <target name="compile" depends="init"
+    description="compilation of sources " >
+  	   <javac srcdir="${src}" destdir="${bin}">
+  	<classpath>
+	      <fileset dir="${lib}">
+	       <include name="*"/>
+	      </fileset>
+  	 </classpath>
+    	</javac>
+  </target>
+
+	<!-- creation d'un executable java version linux -->
+	  <target name="dist_linux" depends="compile"
+	        description="generating archive" >
+	    <mkdir dir="${dist}"/> 
+	  	 <jar destfile="${dist}/RN_linux.jar" filesetmanifest="mergewithoutmain">
+	  	            <manifest>
+	  	                <attribute name="Main-Class" value="Main.Main"/>
+	  	                <attribute name="Class-Path" value="."/>
+	  	            </manifest>
+	  	            <fileset dir="${bin}"/>
+	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/MozillaInterfaces.jar"/>
+	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/swt_linux.jar"/>
+	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/Tidy.jar"/>
+	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/mozdom4java.jar"/>
+	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/JSwiff.jar"/>
+	  	        </jar>
+	  	 <copy todir="${bin}/SWTLayer/" preservelastmodified="true">
+	  	    <fileset dir="${src}/SWTLayer/">
+	  	      <include name="firefox.sh"/>
+	  	    </fileset>
+	  	  </copy> 
+	  	 <copy todir="${dist}/bin/SWTLayer/" preservelastmodified="true">
+	  	    <fileset dir="${bin}/SWTLayer/">
+	  	      <include name="firefox.sh"/>
+	  	    </fileset>
+	  	  </copy> 
+	  	<chmod dir="${dist}/bin" perm="ugo+rwx" 
+	  	       includes="**/*.sh"/>
+	  	</target>
+
+		
+<!--  creation d'un executable java version windows -->
+	  <target name="dist_windows" depends="compile"
+	        description="generating archive" >
+	    <mkdir dir="${dist}"/> 
+	  	  	 <jar destfile="${dist}/RN_windows.jar" filesetmanifest="mergewithoutmain">
+	  	  	            <manifest>
+	  	  	                <attribute name="Main-Class" value="Main.Main"/>
+	  	  	                <attribute name="Class-Path" value="."/>
+	  	  	            </manifest>
+	  	  	            <fileset dir="${bin}"/>
+	  	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/MozillaInterfaces.jar"/>
+	  	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/swt_win.jar"/>
+	  	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/Tidy.jar"/>
+	  	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/mozdom4java.jar"/>
+	  	  	            <zipfileset excludes="META-INF/*.SF" src="${lib}/JSwiff.jar"/>
+	  	  	        </jar>
+	  	 </target>
+
+		<!-- generation de la javadoc -->
+	   <target name="javadoc">
+	        <javadoc access="public" 
+	        	author="true" 
+	        	classpath="lib/JSwiff.jar:lib/junit.jar:lib/mozdom4java.jar:lib/Tidy.jar:lib/swt_linux.jar:lib/MozillaInterfaces.jar" 
+	        	destdir="doc" 
+	        	doctitle="Robot Navigateur" 
+	        	nodeprecated="false" 
+	        	nodeprecatedlist="false" 
+	        	noindex="false" 
+	        	nonavbar="false" 
+	        	notree="false" 
+	        	packagenames="DecisionsLayer,Main,WebCodeLayer,SWTLayer" 
+	        	source="1.6" 
+	        	sourcepath="src" 
+	        	splitindex="true" 
+	        	use="true" 
+	        	version="true"/>
+	    </target>
+	
+  <!--target name="javadoc" depends="init"
+  	description="generating java documentation ">
+	 	<javadoc destdir="${doc}" 
+	 		author="true" 
+	 		version="true" 
+	 		use="true" 
+	 		windowtitle="Robot navigateur"
+	 		doctitle="Robot navigateur"
+	 		bottom="Copyright © 2009 - Gregory ANNE, Yoann JANSZEN, Papa Issa DIALLO, Yosra BARATLI">
+	    <fileset dir="${src}" defaultexcludes="yes">
+	      <include name="**/*" />
+	    </fileset>
+	    <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+	  </javadoc>
+
+	</target-->
+
+<!-- Execution du programme a partir de l'executable cree
+dans la cible dist -->
+	<target name="run" description="Launching program">
+    	<!--arg value="http://englishblazere.free.fr/moncv"/-->
+   			<if>
+   				<equals arg1="${os.name}" arg2="Linux" />
+				<then>  
+					<echo message="dist_linux"/>
+					<antcall target="dist_linux"/>
+					 <java jar="${dist}/RN_linux.jar"
+					 	fork="true" classpath="."/>  
+				</then>
+					<else>
+						<echo message="dist_win"/>
+						<antcall target="dist_windows"/>
+						<java jar="${dist}/RN_windows.jar"
+							fork="true" classpath="."/>  
+					</else>
+			</if>
+  </target>
+
+<!-- Tests de non regression -->
+	<target name="junit_all"  description="Launching tests">
+		   	<if>
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>  
+				<java classname="Main.TestsExecution" fork="true">
+				     <classpath>
+				      <fileset dir="${dist}">
+				   <include name="RN_linux.jar"/>
+				      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+		     	     </classpath>
+		     	    </java>
+		     	</then>
+					<else>
+			      <java classname="Main.TestsExecution" fork="true">
+			      	     <classpath>
+			      	      <fileset dir="${dist}">
+			      	   <include name="RN_windows.jar"/>
+			      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+			     	     </classpath>
+			     	    </java>
+			     	</else>
+			</if>
+	       </target>
+
+<!-- Test unitaire des methodes de la couche de decisions -->
+	<target name="junit_DecisionsLayer" description="Launching tests">
+		   	<if>
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>  
+				<java classname="DecisionsLayer.DecisionsLayerTester" fork="true">
+				     <classpath>
+				      <fileset dir="${dist}">
+				   <include name="RN_linux.jar"/>
+				      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+		     	     </classpath>
+		     	    </java>
+		     	</then>
+					<else>
+			      <java classname="DecisionsLayer.DecisionsLayerTester" fork="true">
+			      	     <classpath>
+			      	      <fileset dir="${dist}">
+			      	   <include name="RN_windows.jar"/>
+			      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+			     	     </classpath>
+			     	    </java>
+			     	</else>
+			</if>
+	       </target>
+
+	<!-- Test unitaire du module de manipulation des couches
+	du systeme -->
+	<target name="junit_Main" description="Launching tests">
+		   	<if>
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>  
+				<java classname="Main.MainTester" fork="true">
+				     <classpath>
+				      <fileset dir="${dist}">
+				   <include name="RN_linux.jar"/>
+				      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+		     	     </classpath>
+		     	    </java>
+		     	</then>
+					<else>
+			      <java classname="Main.MainTester" fork="true">
+			      	     <classpath>
+			      	      <fileset dir="${dist}">
+			      	   <include name="RN_windows.jar"/>
+			      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+			     	     </classpath>
+			     	    </java>
+			     	</else>
+			</if>
+	       </target>
+
+	<!-- Test unitaire de la couche d'affichage des pages Web -->
+	<target name="junit_SWTLayer" description="Launching tests">
+		   	<if>
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>  
+				<java classname="SWTLayer.SWTLayerTester" fork="true">
+				     <classpath>
+				      <fileset dir="${dist}">
+				   <include name="RN_linux.jar"/>
+				      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+		     	     </classpath>
+		     	    </java>
+		     	</then>
+					<else>
+			      <java classname="SWTLayer.SWTLayerTester" fork="true">
+			      	     <classpath>
+			      	      <fileset dir="${dist}">
+			      	   <include name="RN_windows.jar"/>
+			      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+			     	     </classpath>
+			     	    </java>
+			     	</else>
+			</if>
+	       </target>
+	
+<!-- Test unitaire de la couche de lecture et de parcours des pages web et de leurs codes -->
+	<target name="junit_WebCodeLayer" description="Launching tests">
+		   	<if>
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>  
+				<java classname="WebCodeLayer.WebCodeLayerTester" fork="true">
+				     <classpath>
+				      <fileset dir="${dist}">
+				   <include name="RN_linux.jar"/>
+				      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+		     	     </classpath>
+		     	    </java>
+		     	</then>
+					<else>
+			      <java classname="WebCodeLayer.WebCodeLayerTester" fork="true">
+			      	     <classpath>
+			      	      <fileset dir="${dist}">
+			      	   <include name="RN_windows.jar"/>
+			      </fileset>
+			     	      <fileset dir="${lib}">
+			     	       <include name="*"/>
+			     	      </fileset>
+			     	     </classpath>
+			     	    </java>
+			     	</else>
+			</if>
+	       </target>
+	
+	
+<!-- Pour la reinitialisation de l'environnement de travail -->
+  <target name="clean"  description="removing old files" >
+    <delete dir="${bin}"/>
+    <delete dir="${dist}"/>
+    <delete dir="${doc}"/>
+  </target>
+	
+</project>
