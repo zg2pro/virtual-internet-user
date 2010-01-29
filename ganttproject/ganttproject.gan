@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2008-12-29" view-index="1" gantt-divider-location="400" resource-divider-location="301" version="2.0">
+    <description/>
+    <view zooming-state="default:3" id="gantt-chart"/>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="94" order="0"/>
+        <field id="1" name="Rôle par défaut" width="5" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+    </calendars>
+    <tasks color="#8cb6ce">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Travail d'études et de recherche" color="#ff0033" meeting="false" start="2009-01-05" duration="10" complete="0" priority="1" webLink="http%3A%2F%2Fkarine.anne.free.fr" expand="true">
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="7" name="OS - Remote Firefox" color="#ff00ff" meeting="false" start="2009-01-13" duration="5" complete="0" priority="1" expand="true">
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="8" name="SWT - Browser" color="#ff00ff" meeting="false" start="2009-01-21" duration="4" complete="0" priority="1" expand="true"/>
+        <task id="2" name="JFrame initiale" color="#33ff00" meeting="false" start="2009-01-13" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="14" name="JavaXPCOM" color="#66ff66" meeting="false" start="2009-01-23" duration="2" complete="0" priority="1" expand="true"/>
+        <task id="16" name="Ant" color="#ff0033" meeting="false" start="2009-01-28" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="3" name="Rhino - execution JS" color="#8cb6ce" meeting="false" start="2009-01-13" duration="20" complete="0" priority="1" expand="true"/>
+        <task id="4" name="DOM - parcoursHTML" color="#ff0033" meeting="false" start="2009-01-13" duration="5" complete="0" priority="1" expand="true">
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="5" name="Transformation Relatif-&gt;absolu" color="#ff0033" meeting="false" start="2009-01-20" duration="5" complete="0" priority="1" expand="true">
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="6" name="Module de décision" color="#33ff00" meeting="false" start="2009-01-13" duration="9" complete="0" priority="1" expand="true">
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="15" name="DOM - &lt;img&gt; &lt;frame&gt;" color="#ff0033" meeting="false" start="2009-01-23" duration="7" complete="0" priority="1" expand="true"/>
+        <task id="13" name="Flash / ActionScript" color="#66ff66" meeting="false" start="2009-01-23" duration="8" complete="0" priority="1" expand="true"/>
+        <task id="12" name="Intégration - Debug" color="#000000" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="false" start="2009-01-27" duration="13" complete="0" priority="1" expand="true"/>
+        <task id="9" name="Preparation Rapport Wiki" color="#8cb6ce" meeting="false" start="2009-01-19" duration="24" complete="0" priority="1" expand="true"/>
+        <task id="11" name="Preparation soutenance" color="#8cb6ce" meeting="false" start="2009-02-16" duration="4" complete="0" priority="1" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Gregory" function="Default:0" contacts="englishblazere@free.fr" phone="0677976494"/>
+        <resource id="1" name="Yoann" function="Default:0" contacts="yjanszen@gmail.com" phone="06.13.59.48.66"/>
+        <resource id="2" name="Yosra" function="Default:0" contacts="yosra.baratli@hotmail.com" phone="06 66 01 50 82"/>
+        <resource id="3" name="Issa" function="Default:0" contacts="papa_issa@hotmail.com" phone="06 25 13 01 93"/>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="8" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="4" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="15" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="15" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="13" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="12" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="12" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="12" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="12" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="9" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="9" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="11" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd3" order="0" width="124"/>
+        <displaycolumn property-id="tpd4" order="1" width="52"/>
+        <displaycolumn property-id="tpd5" order="2" width="68"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
